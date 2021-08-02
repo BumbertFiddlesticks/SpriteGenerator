@@ -2,6 +2,7 @@ extends Node
 
 var noise
 var noise2
+var outlineColor = Color(34.0, 32.0, 52.0, 255.0) / 255.0
 
 func _init():
 	noise = OpenSimplexNoise.new()
@@ -12,16 +13,16 @@ func _init():
 	noise2.lacunarity = 3.0
 	
 	noise.octaves = 5
-	noise.period = 30.0
+	noise.period = 10.0      # 30.0
 	noise.persistence = 0.4
-	noise.lacunarity = 3.0
+	noise.lacunarity = 1.0   # 3.0
 
 func fill_colors(map, colorscheme, eye_colorscheme, n_colors, outline = true):
 	noise.seed = randi()
 	noise2.seed = randi()
 	var groups = []
 	var negative_groups = []
-	
+		
 	groups = _flood_fill(map, groups, colorscheme, eye_colorscheme, n_colors, false, outline)
 	negative_groups = _flood_fill_negative(map, negative_groups, colorscheme, eye_colorscheme, n_colors, outline)
 	
@@ -40,7 +41,7 @@ func _flood_fill_negative(map, groups, colorscheme, eye_colorscheme, n_colors, o
 	
 	return _flood_fill(negative_map, groups, colorscheme, eye_colorscheme, n_colors, true, outline)
 
-# myd overcomplicated way of a flood fill algorithm
+# my overcomplicated way of a flood fill algorithm
 func _flood_fill(map, groups, colorscheme, eye_colorscheme, n_colors, is_negative = false, outline = true):
 	# checked_map holds a 2d map of all the cells and if they have been checked in the flood fill yet
 	var checked_map = []
@@ -50,7 +51,8 @@ func _flood_fill(map, groups, colorscheme, eye_colorscheme, n_colors, is_negativ
 			arr.append(false)
 		checked_map.append(arr)
 	
-	# bucket is all the cells that have been found through flood filling and whose neighbours will be checked next
+	# bucket is all the cells that have been found through flood filling and 
+	# and whose neighbours will be checked next
 	var bucket = []
 	for x in range(0, map.size()):
 		for y in range(0, map[x].size()):
@@ -118,29 +120,29 @@ func _get_color(map, pos, is_negative, right, left, down, up, colorscheme, eye_c
 		if outline:
 			group.arr.append({
 				"position": pos + Vector2(0, 1),
-				"color": Color(0,0,0,1)
+				"color": outlineColor
 			})
 	if !right:
 		if is_negative:
 			n2 += 0.1
 		else:
 			n += 0.2
-		n*=1.1
+		n *=1.1
 		if outline:
 			group.arr.append({
 				"position": pos + Vector2(1, 0),
-				"color": Color(0,0,0,1)
+				"color": outlineColor
 			})
 	if !up:
 		if is_negative:
-			n2 +=0.15
+			n2 += 0.15
 		else:
 			n += 0.45
-		n*=1.2
+		n *= 1.2
 		if outline:
 			group.arr.append({
 				"position": pos + Vector2(0, -1),
-				"color": Color(0,0,0,1)
+				"color": outlineColor
 			})
 	if !left:
 		if is_negative:
@@ -151,9 +153,9 @@ func _get_color(map, pos, is_negative, right, left, down, up, colorscheme, eye_c
 		if outline:
 				group.arr.append({
 					"position": pos + Vector2(-1, 0),
-					"color": Color(0,0,0,1)
+					"color": outlineColor
 				})
-
+	
 	# highlight colors if the difference in colors between neighbours is big
 	var c_0 = colorscheme[floor(noise.get_noise_2d(col_x, pos.y) * (n_colors-1))]
 	var c_1 = colorscheme[floor(noise.get_noise_2d(col_x, pos.y - 1) * (n_colors-1))]
@@ -165,18 +167,30 @@ func _get_color(map, pos, is_negative, right, left, down, up, colorscheme, eye_c
 				(abs(c_0.r - c_3.r) + abs(c_0.g - c_3.g) + abs(c_0.b - c_3.b)) + 
 				(abs(c_0.r - c_4.r) + abs(c_0.g - c_4.g) + abs(c_0.b - c_4.b)))
 	if diff > 2.0:
-		n+= 0.3
-		n*= 1.5
-		n2+= 0.3
-		n2*= 1.5
-
+		n += 0.3
+		n *= 1.5
+		n2 += 0.3
+		n2 *= 1.5
+		
 	# actually choose a color
 	n = clamp(n, 0.0, 1.0)
-	n = floor(n * (n_colors-1))
 	n2 = clamp(n2, 0.0, 1.0)
-	n2 = floor(n2 * (n_colors-1))
-	var col = colorscheme[n]
 	
+	# darker bottom, brighter top
+	n *= clamp(1.05 - pow(pos.y / map[pos.x].size(), 2.0),0.0,1.0)
+	n2 *= clamp(1.05 - pow(pos.y / map[pos.x].size(), 2.0),0.0,1.0)
+	
+	#n = 1.0 - (1.0 -n) * (1.0-n)
+	n = floor(n * (n_colors-1))
+	n2 = floor(n2 * (n_colors-1))
+	
+	# darker left side, brighter right side
+	if pos.x > 0.5 * map.size() - 1:
+		n = min(n_colors-1, n+1)
+		n2 = min(n_colors-1, n2+1)
+	
+	var col = colorscheme[n]
+
 	if is_negative:
 		col = eye_colorscheme[n2]
 	return col

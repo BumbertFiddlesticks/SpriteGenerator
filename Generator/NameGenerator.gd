@@ -1,14 +1,14 @@
 extends Node
 
-var materials = ["Bone", "Snow", "Boxwood", "Graphite", "Stone", "Wooden", "Water", "Ice", "Birch", "Air", "Crystal", "Magma", "Steel", "Metal", "Plastic", "Concrete", "Glass", "Paper", "Aluminium", "Titanium", "Leather", "Quartz", "Mineral"]
-var foods = ["Beet", "Broccoli", "Celery", "Fish", "Cabbage", "Corn", "Dandelion", "Vanilla", "Chocolate", "Lemon", "Coconut", "Strawberry", "Fiddlehead", "Grape", "Cheese", "Cake", "Zucchini", "Lettuce", "Spinach", "Salt", "Turnip", "Banana", "Cucumber", "Pumpkin", "Squash", "Tomato", "Pepper", "Artichoke", "Sunflower", "Asparagus", "Onion", "Shallot", "Meat", "Herb", "Tofu", "Bread", "Rice", "Carrot", "Mushroom", "Bun", "Milk", "Cereal", "Dumpling", "Sushi", "Spaghetti", "Meatball", "Apple Pie", "Dave"]
-var flavors = ["Sweet", "Sour", "Spicy", "Hot", "Salty", "Bitter",  "Disgusting", "Cheesy"]
-var sizes = ["Big", "Small", "Tiny", "Huge", "Massive", "Short", "Grand"]
-var properties = ["Colorful", "Destructive", "Mysterious", "Healing", "Chaotic", "Floating", "Heavy", "Deep", "Hateful", "Unique", "Heavenly", "Radioactive", "Toxic", "Burning", "Freezing", "Beautiful", "Ugly", "Cold", "Great", "Terrible", "Light", "Dark"]
-var colors = ["Red", "Green", "Blue", "Yellow", "Orange", "Pink", "Purple", "Cyan", "Magenta", "Black", "White", "Gray"]
-var ages = ["Old", "Fresh", "Crusty", "New", "Ancient", "Broken", "Fossilized", "Crisp", "Aged", "Fermented"]
-var things = ["Feather", "Sandals", "Gem", "Orb", "Dust", "Book", "Amulet", "Heart", "Finger", "Pencil", "Weapon", "Vitamins", "Calculator", "Cloud", "Overlord", "Bottle", "Branch", "Bag", "Alien", "Fire", "Fork", "Sculpture", "Soul", "Toothbrush" ]
-var other = ["Destruction", "Chaos", "Equality", "Electricity", "Speed", "Mutations", "Agression", "Worship", "Silence", "Illusion", "Purifying", "Growing", "Breaking", "Secrets"]
+var materials = ["Bone", "Snow", "Boxwood", "Graphite", "Stone", "Wooden", "Water", "Ice", "Birch", "Air", "Crystal", "Magma", "Steel", "Metal", "Plastic", "Concrete", "Glass", "Paper", "Aluminium", "Titanium", "Leather", "Quartz", "Mineral",]
+#var foods = ["Beet", "Broccoli", "Celery", "Fish", "Cabbage", "Corn", "Dandelion", "Vanilla", "Chocolate", "Lemon", "Coconut", "Strawberry", "Fiddlehead", "Grape", "Cheese", "Cake", "Zucchini", "Lettuce", "Spinach", "Salt", "Turnip", "Banana", "Cucumber", "Pumpkin", "Squash", "Tomato", "Pepper", "Artichoke", "Sunflower", "Asparagus", "Onion", "Shallot", "Meat", "Herb", "Tofu", "Bread", "Rice", "Carrot", "Mushroom", "Bun", "Milk", "Cereal", "Dumpling", "Sushi", "Spaghetti", "Meatball", "Apple Pie", "Dave"]
+#var flavors = ["Sweet", "Sour", "Spicy", "Hot", "Salty", "Bitter",  "Disgusting", "Cheesy"]
+var sizes = ["Big", "Small", "Tiny", "Huge", "Massive", "Short", "Grand", "Large"]
+var properties = ["Colorful", "Destructive", "Mysterious", "Healing", "Chaotic", "Floating", "Heavy", "Deep", "Hateful", "Unique", "Heavenly", "Radioactive", "Toxic", "Burning", "Freezing", "Beautiful", "Ugly", "Cold", "Great", "Terrible", "Light", "Dark", "Suspicious", "Dutiful", "Scornful", "Deep", "Spiked", "Sharp", "Piercing", "Immortal", "Immovable", "Reactive", "Repulsive", "Conscious", "Acute", "Jagged", "Fine", "Twisted", "Dependable", "Accurate", "Precise", "Unyielding", "Bobs" ]
+var colors = ["Red", "Green", "Blue", "Yellow", "Orange", "Pink", "Purple", "Cyan", "Magenta", "Black", "White", "Gray", "Bob"]
+var ages = ["Old", "Fresh", "Mature", "New", "Ancient", "Broken", "Fossilized", "Crisp", "Aged", "Fermented", "Tired", "Venerable", "Modern", "Unearthed", "Reborn", "Reclaimed", "Exposed", "Robust", "Bob"]
+var things = ["Feather", "Gem", "Orb", "Dust", "Book", "Amulet", "Heart", "Finger", "Pencil", "Weapon", "Calculator", "Cloud", "Bottle", "Branch", "Bag", "Alien", "Fire", "Fork", "Sculpture", "Soul", "Brush", "Sword", "Staff", "Spear", "Dagger", "Axe", "Rod", "Pole", "Stick", "Object", "Trident", "Proof", "Titan", "Constructor", "Blade", "Fabricator", "Bob"]
+var other = ["Destruction", "Chaos", "Equality", "Electricity", "Speed", "Mutations", "Aggression", "Worship", "Silence", "Illusion", "Purification", "Growth", "Breaking", "Secrets", "Anger", "Peace", "Doom", "Ending", "Controversy", "Pain", "Utility", "Unlocking", "Fear", "Strength", "Dexterity", "Wisdom", "Charisma", "Wonder", "Magic", "Love", "Bob", "Empathy"]
 # size - age - shape - colour - origin - material - purpose
 enum text_add {materials, foods, flavors, sizes, properties, colors, ages}
 var can_add = [text_add.materials,text_add.foods,text_add.flavors,text_add.sizes,text_add.properties,text_add.ages]
@@ -32,8 +32,8 @@ func get_name():
 		name_string += _rand_from_array(colors) + " "
 	if has_added.has(text_add.properties):
 		name_string += _rand_from_array(properties) + " "
-	if has_added.has(text_add.flavors):
-		name_string += _rand_from_array(flavors) + " "
+	#if has_added.has(text_add.flavors):
+	#	name_string += _rand_from_array(flavors) + " "
 	if has_added.has(text_add.materials):
 		name_string += _rand_from_array(materials) + " "
 	
@@ -52,14 +52,14 @@ func get_name():
 #	if _rand_chance(0.2):
 #		name_string += _rand_from_array(flavors) + " "
 	
-	if _rand_chance(0.2):
+	if _rand_chance(1.0): # was 0.2
 		name_string += _rand_from_array(things) + " "
 		name_string += "of "
 		name_string += _rand_from_array(other)
 	else:
-		if _rand_chance(0.5):
-			name_string += _rand_from_array(foods)
-		else:
+		#if _rand_chance(0.5):
+		#	name_string += _rand_from_array(foods)
+		#else:
 			name_string += _rand_from_array(things)
 
 	return name_string

@@ -24,7 +24,7 @@ func _draw():
 		for c in cells:
 			size += 1
 			average += c.position
-		eye_cutoff = sqrt(float(size)) * 0.3
+		#eye_cutoff = sqrt(float(size)) * 0.3
 	
 	average = average / cells.size()
 	
@@ -42,6 +42,7 @@ func _process(delta):
 		lifetime += delta * 4.0
 		position.y = sin(lifetime) * 20
 
+# not in use
 func set_eye():
 	is_eye = true
 	update()

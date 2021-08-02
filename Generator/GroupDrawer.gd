@@ -4,7 +4,11 @@ var groups = []
 var negative_groups = []
 var draw_size = 10
 var movement = true
+var debris = true
 onready var cell_drawer = preload("res://Generator/CellDrawer.tscn")
+
+# (snoop) I've disabled interior drawing / eyes, so the weapony things have 
+# holes in them
 
 func _ready():
 	var largest = 0
@@ -14,7 +18,7 @@ func _ready():
 	for i in range(groups.size() - 1, -1, -1):
 		var g = groups[i].arr
 		groups[i]["start_time"] = g.size() + groups.size()
-		if g.size() >= largest * 0.25:
+		if (debris && g.size() >= 9) || (!debris && g.size() > 0.25 * largest): 
 			var cell = cell_drawer.instance()
 			cell.set_cells(g)
 			cell.lifetime = groups[i].start_time
@@ -23,7 +27,7 @@ func _ready():
 			add_child(cell)
 		else:
 			groups.erase(g)
-
+	""""
 	for g in negative_groups:
 		if g.valid:
 			var touching = false
@@ -45,13 +49,14 @@ func _ready():
 
 				if (g.arr.size() + negative_groups.size()) % 5 >= 3:
 					cell.set_eye()
-	
+	"""
 	for c in get_children():
 		c.draw_size = draw_size
 
 func disable_movement():
 	movement = false
 
+# not in use 
 func group_is_touching_group(g1, g2):
 	for c in g1:
 		for c2 in g2:
