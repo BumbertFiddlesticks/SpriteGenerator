@@ -82,7 +82,6 @@ func _on_Right_pressed():
 	_shift_seeds(1)
 
 
-
 func _on_CloseSettings_pressed():
 	$Settings.visible = false
 	$OpenSettings.visible = true
@@ -160,7 +159,7 @@ func _on_Height_value_changed(value):
 func _on_Width_value_changed(value):
 	size.x = clamp(round(value), 10, 128)
 
-# (snoop) 18 is colorScheme.size() in ColorSchemeGenerator (I'm lazy)
+
 func _on_ColorScheme_value_changed(value):
 	color_index = int(value)
 	_redraw()
