@@ -8,12 +8,15 @@ onready var group_drawer = preload("res://Generator/GroupDrawer.tscn")
 var seed_list = []
 var seed_index = 0
 var outline = true
+var debris = true
+var movement = true
+var color_index = -1
 var lifetime = 0
-var size = Vector2(45,45)
+var size = Vector2(24,80)
 
 func _process(delta):
 	lifetime += delta * 0.025
-	$ColorRect.color = Color.from_hsv(fmod(lifetime, 1.0), 0.2, 0.8)
+	#$ColorRect.color = Color.from_hsv(fmod(lifetime, 1.0), 0.2, 0.8)
 
 func _ready():
 	seed_list.append(_get_next_seed())
@@ -32,8 +35,7 @@ func _shift_seeds(shift):
 		$Left.visible = false
 	else:
 		$Left.visible = true
-		
-
+	
 	if seed_index >= seed_list.size():
 		seed_list.append(_get_next_seed())
 	_redraw()
@@ -51,8 +53,10 @@ func _redraw():
 	
 
 func _get_group_drawer(var pixel_perfect = false):
-	var sprite_groups = sprite_generator.get_sprite(seed_list[seed_index], size, 12,  outline)
+	var sprite_groups = sprite_generator.get_sprite(seed_list[seed_index], size, color_index,  outline)
 	var gd = group_drawer.instance()
+	gd.debris = debris
+	gd.movement = movement
 	gd.groups = sprite_groups.groups
 	gd.negative_groups = sprite_groups.negative_groups
 	
@@ -87,11 +91,28 @@ func _on_CloseSettings_pressed():
 
 func _on_ToggleOutline_pressed():
 	outline = !outline
+	_redraw()
 	if outline:
-		$Settings/VBoxContainer/HBoxContainer3/ToggleOutline.text = "On"
+		$Settings/VBoxContainer/OutlineBox/ToggleOutline.text = "On"
 	else:
-		$Settings/VBoxContainer/HBoxContainer3/ToggleOutline.text = "Off"
+		$Settings/VBoxContainer/OutlineBox/ToggleOutline.text = "Off"
 
+func _on_ToggleDebris_pressed():
+	debris = !debris
+	_redraw()
+	if debris:
+		$Settings/VBoxContainer/DebrisBox/ToggleDebris.text = "On"
+	else:
+		$Settings/VBoxContainer/DebrisBox/ToggleDebris.text = "Off"
+
+
+func _on_ToggleMovement_pressed():
+	movement = !movement
+	_redraw();
+	if movement:
+		$Settings/VBoxContainer/MovementBox/ToggleMovement.text = "On"
+	else:
+		$Settings/VBoxContainer/MovementBox/ToggleMovement.text = "Off"
 
 func _on_OpenSettings_pressed():
 	$OpenSettings.visible = false
@@ -138,3 +159,8 @@ func _on_Height_value_changed(value):
 
 func _on_Width_value_changed(value):
 	size.x = clamp(round(value), 10, 128)
+
+# (snoop) 18 is colorScheme.size() in ColorSchemeGenerator (I'm lazy)
+func _on_ColorScheme_value_changed(value):
+	color_index = int(value)
+	_redraw()
