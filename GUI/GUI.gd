@@ -154,10 +154,12 @@ func save_image(img):
 
 func _on_Height_value_changed(value):
 	size.y = clamp(round(value), 10, 128)
+	_redraw()
 
 
 func _on_Width_value_changed(value):
 	size.x = clamp(round(value), 10, 128)
+	_redraw()
 
 
 func _on_ColorScheme_value_changed(value):

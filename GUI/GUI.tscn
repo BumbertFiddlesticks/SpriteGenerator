@@ -8,18 +8,18 @@
 [ext_resource path="res://GUI/GUI.gd" type="Script" id=6]
 [ext_resource path="res://GUI/backgroundShader.shader" type="Shader" id=7]
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 80
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 40
 font_data = ExtResource( 5 )
 
-[sub_resource type="ViewportTexture" id=5]
+[sub_resource type="ViewportTexture" id=4]
 viewport_path = NodePath("Viewport")
 
 [node name="GUI" type="Control"]
@@ -31,7 +31,7 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource( 6 )
+material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.933333, 0.764706, 0.603922, 1 )
@@ -44,7 +44,7 @@ modulate = Color( 0.133333, 0.12549, 0.203922, 1 )
 anchor_right = 1.0
 margin_top = 10.0
 margin_bottom = 120.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "Test"
 align = 1
 autowrap = true
@@ -163,6 +163,7 @@ __meta__ = {
 }
 
 [node name="Settings" type="Panel" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.733333 )
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -190,7 +191,7 @@ margin_bottom = 46.0
 margin_top = 3.0
 margin_right = 126.0
 margin_bottom = 43.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "Settings"
 
 [node name="CloseSettings" type="Button" parent="Settings/VBoxContainer/SettingsBox"]
@@ -220,7 +221,7 @@ margin_right = 115.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.7
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "Width:"
 
 [node name="Width" type="SpinBox" parent="Settings/VBoxContainer/WidthBox"]
@@ -247,7 +248,7 @@ margin_right = 115.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.7
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "Height:"
 
 [node name="Height" type="SpinBox" parent="Settings/VBoxContainer/HeightBox"]
@@ -275,7 +276,7 @@ margin_top = 5.0
 margin_right = 113.0
 margin_bottom = 45.0
 size_flags_stretch_ratio = 0.7
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "Colors: "
 
 [node name="ColorScheme" type="SpinBox" parent="Settings/VBoxContainer/ColorSchemeBox"]
@@ -296,7 +297,7 @@ margin_top = 3.0
 margin_right = 114.0
 margin_bottom = 43.0
 size_flags_stretch_ratio = 0.7
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "Outline:"
 
 [node name="ToggleOutline" type="Button" parent="Settings/VBoxContainer/OutlineBox"]
@@ -319,7 +320,7 @@ margin_right = 105.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.7
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "Debris:"
 
 [node name="ToggleDebris" type="Button" parent="Settings/VBoxContainer/DebrisBox"]
@@ -339,7 +340,7 @@ margin_top = 3.0
 margin_right = 108.0
 margin_bottom = 43.0
 size_flags_stretch_ratio = 0.7
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "Motion:"
 
 [node name="ToggleMovement" type="Button" parent="Settings/VBoxContainer/MovementBox"]
@@ -363,7 +364,7 @@ modulate = Color( 1, 1, 1, 0.0392157 )
 margin_right = 40.0
 margin_bottom = 40.0
 rect_scale = Vector2( 0.01, 0.01 )
-texture = SubResource( 5 )
+texture = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
